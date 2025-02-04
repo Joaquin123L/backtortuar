@@ -86,14 +86,15 @@ class CustomEstado(generics.GenericAPIView):
         try:
             poliza = Poliza.objects.get(vehiculo__patente=patente)
             if poliza.estado.nombre == "Activa":
-                # Si la póliza está activa, devuelve una respuesta exitosa
-                return Response({True}, status=status.HTTP_200_OK)
+            # Si la póliza está activa, devuelve True
+                return Response(True, status=status.HTTP_200_OK)
             else:
-                # Si la póliza no está activa, devuelve un mensaje de póliza inactiva
-                return Response({ False}, status=status.HTTP_200_OK)
+            # Si la póliza no está activa, devuelve False
+                return Response(False, status=status.HTTP_400_BAD_REQUEST)
         except Poliza.DoesNotExist:
-            # Si no se encuentra ninguna póliza asociada a la patente, devuelve un error
-            return Response({  False}, status=status.HTTP_404_NOT_FOUND)
+        # Si no se encuentra ninguna póliza asociada a la patente, devuelve False
+            return Response(False, status=status.HTTP_404_NOT_FOUND)
+
 
 
 def obtener_descripcion_herido(dni_herido):
